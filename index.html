@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AJAX Product Search</title>
+  <style>
+    input { padding: 10px; width: 300px; }
+    .result { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Product Search</h2>
+  <input type="text" id="search" placeholder="Search products...">
+  <div class="result" id="result"></div>
+
+  <script>
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('input', async () => {
+      const query = searchInput.value;
+      const res = await fetch(`http://localhost:5000/search?q=${query}`);
+      const products = await res.json();
+
+      document.getElementById('result').innerHTML = products.map(p =>
+        `<p>${p.name}</p>`).join('') || '<p>No products found</p>';
+    });
+  </script>
+</body>
+</html>
